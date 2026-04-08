@@ -1,0 +1,32 @@
+name: Auto Stock Bot
+
+on:
+  schedule:
+    # 使用 Cron 語法設定每 5 分鐘執行一次 (注意：GitHub Actions 可能會有幾分鐘的延遲)
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # 允許在網頁上手動點擊執行測試
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 1. 取得程式碼
+      uses: actions/checkout@v3
+
+    - name: 2. 設定 Python 環境
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 3. 安裝所需套件
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4
+
+    - name: 4. 執行爬蟲與發送通知
+      env:
+        # 將 GitHub Secrets 轉換為環境變數供 Python 讀取
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+      run: python main.py
