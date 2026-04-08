@@ -2,7 +2,7 @@ name: Auto Stock Bot
 
 on:
   schedule:
-    # 使用 Cron 語法設定每 5 分鐘執行一次 (注意：GitHub Actions 可能會有幾分鐘的延遲)
+    # 使用 Cron 語法設定每 5 分鐘執行一次 (注意：GitHub Actions 可能會有幾分鐘的延遲
     - cron: '*/5 * * * *'
   workflow_dispatch: # 允許在網頁上手動點擊執行測試
 
